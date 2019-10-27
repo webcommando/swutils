@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+    <title>Savage Worlds Simple Dice</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="w3.css">
+<head>
+<style>
+div.dice{
+	float:left;
+	width:32px;
+	background:#F5F5F5;
+	border:#999 1px solid;
+	padding:10px;
+	font-size:24px;
+	text-align:center;
+	margin:5px;
+}
+</style>
+<script>
+
+function roll(sides)
+{
+    return Math.floor(Math.random() * sides) + 1;
+}
+
+function rollDice(sides){
+    
+    var nDmText = document.getElementById("diesides");
+    nDmText.innerHTML = "d" + sides;
+    var die1 = document.getElementById("die1");
+    var die2 = document.getElementById("die2");
+    var status = document.getElementById("status");
+	var numtoroll = document.getElementById("numrolls").value;
+	
+    
+    var d1 = 0;
+    var d2 = 0;
+    var status1 = " (";
+    var status2 = " (";
+    //status1 = "[" + numtoroll +"]" + status1;
+	
+    var tempRoll =  roll(sides);
+    d1 = tempRoll;
+    status1 = status1 + d1;
+    
+	     
+//var i;
+//for (i=1; i<=numtoroll; i++)
+//{
+	
+	while (tempRoll == sides)
+	{
+		tempRoll = roll(sides);
+		d1 = d1 + tempRoll;
+		status1 = status1 + "+" + tempRoll;
+		tempRoll = roll(sides);
+	}
+
+//}		
+
+
+	sides = 6;
+    tempRoll =  roll(sides);
+    d2 = tempRoll;
+    status2 = status2 + d2;
+    
+    while (tempRoll == sides)
+    {
+        tempRoll = roll(sides);
+        d2= d2 + tempRoll;
+        status2 = status2 + "+" + tempRoll;
+        
+    }
+    
+    //var d1 = Math.floor(Math.random() * sides) + 1;
+    //var d2 = Math.floor(Math.random() * 6) + 1;
+    //var diceTotal = d1 + d2;
+	
+    die1.innerHTML = d1 + status1 + ")";
+    die2.innerHTML = d2 + status2 + ")";
+	
+
+    
+    if ((d1 ==1) && (d2 == 1))
+    {
+        status.innerHTML += " Critical Failure!";
+    }
+    else {
+        status.innerHTML = "";
+    }
+
+}
+</script>
+</head>
+
+<body>
+    <div class="w3-container w3-blue w3-xlarge">Savage Worlds Brain Dead Simple Roller</div>
+    <div class="w3-container w3-half w3-pale-green w3-round-xlarge">
+        <img src="d4.png" class="w3-circle w3-btn w3-image" width="120" height="120" onclick="rollDice(4);" alt="d4">
+        <img src="d6.png" class="w3-circle w3-btn w3-image" width="120" height="120"" onclick="rollDice(6);" alt="d6">
+        <img src="d8.png" class="w3-circle w3-btn w3-image" width="120" height="120"" onclick="rollDice(8);" alt="d8">
+        <img src="d10.png" class="w3-circle w3-btn w3-image" width="120" height="120"" onclick="rollDice(10);" alt="d10">
+        <img src="d12.png" class="w3-circle w3-btn w3-image" width="120" height="120"" onclick="rollDice(12);" alt="d12">
+        <img src="d20.png" class="w3-circle w3-btn w3-image" width="120" height="120"" onclick="rollDice(20);" alt="d20">
+		<input type="number" min="1" max="8" vvalue="1" step="1" id="numrolls" class="w3-input"><label>Num Dice</label>
+        <!--<div class="w3-container">
+            <select id="multipledice"class="w3-select w3-pale-green w3-xlarge" name="multipledice" onchange="rollDice(this.value);">
+            <option value="1" selected>Number of dice: 1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+
+            </select>
+        </div> -->
+    </div>
+    <div class="w3-container w3-half w3-green w3-round-xlarge">
+        <div class="w3-container w3-green">
+             <div class="w3-container w3-quarter">
+                    <div id="diesides" class="w3-panel w3-grey w3-leftbar w3-rightbar w3-border-blue-grey w3-xlarge w3-center">dM</div> 
+            </div>
+            <div class="w3-container w3-threequarter">
+                   <div id="die1" class="w3-panel w3-pale-blue w3-leftbar w3-rightbar w3-border-blue w3-xlarge">0</div> 
+                
+            </div>
+ 
+        </div>
+        <div class="w3-container w3-green">
+            <div class="w3-container w3-quarter">
+                    <div id="wctext" class="w3-panel w3-grey w3-leftbar w3-rightbar w3-border-blue-grey w3-xlarge">
+						<img src="joker.png" alt="WC" class="w3-image w3-center" width="50" height="50">
+					</div> 
+            </div>
+            <div class="w3-container w3-threequarter">
+                   <div id="die2" class="w3-panel w3-pale-blue w3-leftbar w3-rightbar w3-border-blue w3-xlarge">0</div> 
+                
+            </div>
+ 
+        </div>
+
+ 
+        <div class="w3-container w3-green ">
+			<div class="w3-panel">
+				<div id="status"class="w3-pale-red w3-round-xlarge w3-xlarge w3-padding-small w3-center"></div>
+			</div> 
+ 
+        </div>
+       
+    </div>   
+
+
+<div class="w3-container">
+    <p class="w3-blue w3-padding-small">Copyright 2019 Carl Davis</p>
+	<p id="outputtest" class="w3-blue w3-padding-small"></p>
+</div>
+</body>
+
+</html>
