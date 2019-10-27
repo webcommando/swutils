@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html>
+<title>RPGCommando - Savage Worlds Bonus Tracker</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+
+<style>
+html,body,h1,h2,h3,h4,h5,h6 {font-family: "Arial", sans-serif}
+</style>
+
+<script>
+
+// print the bonus to the appropriate field.
+function displayBonus(bonusValue)
+{
+  var bonusField = document.getElementById("bonusfield");
+  var middleDisplayField = document.getElementById("middledisplay");
+
+  var modText = "Mod: "
+  if (bonusValue > 0) {
+    modText += "+";
+  }
+  //bonusField.innerHTML = bonusValue;
+  middleDisplayField.innerHTML = modText + bonusValue;
+}
+
+// perform a recalculation of the bonus by reading all the form items.
+function recalcBonus()
+{
+
+  // All the check boxes.
+  var checkboxBonusList = ['unstable', 'aim', 'distracted', 'burst', 'multishot', 'offhand', 'wild', 'twoone', 'touch'];
+  // All the radio buttons.
+  var radioBonusList = ['cover', 'range', 'illumination', 'wound', 'fatigue'];
+
+  // Overall value
+  var value = 0;
+
+  // Loop through the checkboxes
+  for (i=0; i<checkboxBonusList.length; i++)
+  {
+    value += getCheckboxValue(checkboxBonusList[i]);
+  }
+  // Loop through the radio buttons
+  for (i=0; i<radioBonusList.length; i++)
+  {
+    value += getRadioValue(radioBonusList[i]);
+  }
+
+  displayBonus(value);
+
+
+}
+
+// Function to get the value from a checkbox
+function getCheckboxValue(elementName)
+{
+  var checkedValue = 0;
+  var inputElements = document.getElementsByName(elementName);
+  for(var i=0; inputElements[i]; ++i){
+        if(inputElements[i].checked){
+             checkedValue = checkedValue + parseInt(inputElements[i].value);
+             break;
+        }
+  }
+
+  //console.log("Element:"+ elementName + " checkValue:" + checkedValue);
+
+  return(checkedValue);
+}
+
+// Function to get the value of a set of radio buttons
+function getRadioValue(elementName)
+{
+    var radioValue = 0;
+
+    var radios = document.getElementsByName(elementName);
+    for (var i = 0, length = radios.length; i < length; i++)
+    {
+      if (radios[i].checked)
+      {
+          // do whatever you want with the checked radio
+          radioValue = parseInt(radios[i].value);
+
+          // only one radio can be logically checked, don't check the rest
+          break;
+      }
+    }
+    //console.log("Element: " + elementName + " radioValue:" + radioValue);
+
+    return(radioValue);
+}
+
+</script>
+
+<body class="w3-blue-grey">
+
+<!-- Page Container -->
+<div class="w3-content w3-margin-top" style="max-width:1400px;">
+
+  <!-- The Grid -->
+  <div class="w3-row-padding">
+
+    <!-- Left Column -->
+    <div class="w3-third">
+
+      <div class="w3-white w3-text-grey w3-card-4">
+        <div class="w3-display-container">
+          <img class="w3-opacity-max" src="SW_LOGO_FP_SMALL.png" style="width:100%" alt="Dice">
+          <div class="w3-display-bottomleft w3-container w3-text-black ">
+            <h3>Savage Worlds Bonus Tracker</h3>
+          </div>
+          <div class="w3-display-topleft w3-container w3-text-black">
+            <h2>RPGCommando</h2>
+          </div>
+          <div class="w3-display-middle w3-container w3-text-black">
+            <h2 id="middledisplay">Mod: --</h2>
+          </div>
+        </div>
+        <!--
+        <div class="w3-container">
+          <h2>Modifier:</hr>
+          <h2 class="w3-center" id="bonusfield">0</h2>
+          <p  id="ouputtest"></p>
+        </div>
+      -->
+      </div><br>
+
+    <!-- End Left Column -->
+    </div>
+
+    <!-- Right Column -->
+
+    <div class="w3-twothird">
+
+      <div class="w3-container w3-card-4 w3-white w3-margin-bottom">
+        <h2 class="w3-text-grey w3-padding-16"><i class="fas fa-dice w3-margin-right w3-xxlarge w3-text-blue-grey">
+        </i>Select Conditions:</h2>
+
+        <div class="w3-container">
+          <div class="w3-half">
+              <button id="recalcButton" class="w3-btn w3-round w3-border w3-border-gray w3-block" onclick="recalcBonus()">Calculate</button>
+            </div>
+            <div class="w3-half">
+              <button id="resetButton" class="w3-btn w3-round w3-border w3-border-gray w3-block" onclick="document.getElementById('mainform').reset()">Reset</button>
+            </div>
+        </div>
+        <p></p>
+      </div>
+
+      <!-- Savage Worlds -->
+      <div class="w3-container w3-card-4 w3-white w3-margin-bottom">
+        <div class="w3-container">
+
+          <!-- Material -->
+          <div class="w3-container">
+            <form id="mainform">
+            <br>
+            <table class="w3-table w3-striped w3-bordered w3-hoverable">
+
+              <tr>
+                <td>Range:</td>
+                <td class="w3-cell-middle">
+                  <input type="radio" name="range" class="w3-radio" value="0" checked > Short <br>
+                  <input type="radio" name="range" class="w3-radio" value="-2"> Medium <br>
+                  <input type="radio" name="range" class="w3-radio" value="-4"> Long <br>
+                  <input type="radio" name="range" class="w3-radio" value="-8"> Extreme
+                </td>
+              </tr>
+              <tr>
+                <td>Wounds:</td>
+                <td class="w3-cell-middle">
+                  <input type="radio" name="wound" class="w3-radio" value="0" checked> None <br>
+                  <input type="radio" name="wound" class="w3-radio" value="-1" > 1 wound <br>
+                  <input type="radio" name="wound" class="w3-radio" value="-2"> 2 wound <br>
+                  <input type="radio" name="wound" class="w3-radio" value="-3"> 3 wound
+                </td>
+            </tr>
+            <tr>
+              <td>Fatigue:</td>
+              <td>
+                <input type="radio" name="fatigue" class="w3-radio" value="0" checked> None <br>
+                <input type="radio" name="fatigue" class="w3-radio" value="-1" > 1 Fatigue <br>
+                <input type="radio" name="fatigue" class="w3-radio" value="-2"> 2 Fatigue <br>
+              </td>
+            </tr>
+            <tr>
+              <td>Target Vulnerable:</td>
+              <td>  <input id="vulnerable" type="checkbox" name="aim" value="+2" class="w3-check"></td>
+            </tr>
+            <tr>
+              <td>Attacker Distracted:</td>
+              <td>  <input id="distracted" type="checkbox" name="aim" value="-2" class="w3-check"></td>
+            </tr>
+            <tr>
+              <td>Unstable Platform:</td>
+              <td>  <input id="unstable" type="checkbox" name="unstable" value="-2" class="w3-check"></td>
+            </tr>
+            <tr>
+              <td>Wild Attack:</td>
+              <td>  <input id="wild" type="checkbox" name="wild" value="+2" class="w3-check"></td>
+            </tr>
+            <tr>
+              <td>Cover:</td>
+              <td>
+                <input type="radio" name="cover" class="w3-radio" value="0" checked> None <br>
+                <input type="radio" name="cover" class="w3-radio" value="-2" > Light <br>
+                <input type="radio" name="cover" class="w3-radio" value="-4"> Medium <br>
+                <input type="radio" name="cover" class="w3-radio" value="-6"> Heavy <br>
+                <input type="radio" name="cover" class="w3-radio" value="-8"> Near Total
+              </td>
+            </tr>
+            <tr>
+              <td>Illumination:</td>
+              <td>
+                <input type="radio" name="illumination" class="w3-radio" value="0" checked> Full <br>
+                <input type="radio" name="illumination" class="w3-radio" value="-2" > Dim <br>
+                <input type="radio" name="illumination" class="w3-radio" value="-4"> Dark <br>
+                <input type="radio" name="illumination" class="w3-radio" value="-6"> Pitch Black
+              </td>
+            </tr>
+            <tr>
+              <td>(Shooting)<br>Three Round Burst:</td>
+              <td>  <input id="burst" type="checkbox" name="burst" value="+1" class="w3-check"></td>
+            </tr>
+            <tr>
+              <td>(Shooting) <br> Automatic Penalty:</td>
+              <td>  <input id="multishot" type="checkbox" name="multishot" value="-2" class="w3-check"></td>
+            </tr>
+             <tr>
+                  <td>(Shooting)<br>Aiming:</td>
+                  <td>  <input id="aim" type="checkbox" name="aim" value="+2" class="w3-check"></td>
+                </tr>
+
+            <tr>
+              <td>(Melee) <br>Off Handed:</td>
+              <td>  <input id="offhand" type="checkbox" name="offhand" value="-2" class="w3-check"></td>
+            </tr>
+
+            <tr>
+              <td>(Melee) <br>Two Weapon vs. One:</td>
+              <td>  <input id="twoone" type="checkbox" name="twoone" value="+1" class="w3-check"></td>
+            </tr>
+            <tr>
+              <td>(Melee) <br> Touch Attack:</td>
+              <td>  <input id="touch" type="checkbox" name="touch" value="+2" class="w3-check"></td>
+            </tr>
+
+            </table>
+          </form>
+
+          <br>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Savage Worlds -->
+      <div class="w3-container w3-card-4 w3-white w3-margin-bottom">
+        <h5 class="w3-text-grey w3-padding-16"><i class="fas fa-dice w3-margin-right w3-xxlarge w3-text-blue-grey"></i>Savage Worlds</h5>
+        <div class="w3-container">
+
+          <!-- Material -->
+          <div class="w3-half">
+
+          </div>
+          <div class="w3-half">
+           <div class="w3-card-4 w3-margin-left w3-center" style="width:75%;">
+
+              <div class="w3-container">
+                <img  src="SW_LOGO_FP_SMALL.png" style="width: 75%">
+              </div>
+
+           </div>
+          </div>
+        </div>
+
+      </div>
+
+
+    <!-- End Right Column -->
+    </div>
+
+  <!-- End Grid -->
+  </div>
+
+  <!-- End Page Container -->
+</div>
+
+<footer class="w3-container w3-blue-grey w3-center w3-margin-top">
+  <p>Copyright Carl Davis.</p>
+
+  <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a>.  d20 from Pixabay</p>
+</footer>
+
+</body>
+</html>
