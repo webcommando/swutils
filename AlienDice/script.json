@@ -1,0 +1,14 @@
+{
+  "name": "Alien Dice",
+  "version": "1.0.0",
+  "description": "This script provides a dice roller for the Alien RPG.",
+  "authors": "Carl D.",
+  "roll20userid": "2505097",
+  "patreon": "",
+  "dependencies": [],
+  "modifies": {},
+  "conflicts": [],
+  "script": "AlienDice.js",
+  "useroptions": {},
+  "previousversions": []
+}
