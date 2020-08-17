@@ -37,7 +37,7 @@ var AlienDice = AlienDice || (function() {
     var BASESUCC = "bs";
 
 
-    var version = '0.1.0', lastUpdate = 1578176277749,
+    var version = '1.0.0', lastUpdate = 1597698996530,
 
 	  checkInstall = function() {
         log('-=> AlienDice v'+version+' <=-  ['+(new Date(lastUpdate))+']');
