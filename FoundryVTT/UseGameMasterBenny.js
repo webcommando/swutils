@@ -27,8 +27,14 @@ async function main(){
   }
   else {
     bennies--;
-    actor[0].data.data.bennies.value = bennies;
-
+    //actor[0].data.data.bennies.value = bennies;
+    actor[0].update({
+    data: {
+        bennies: {
+            value: bennies
+        }
+    }
+    });
 
     let chatTemplate = `
     <p> GM Used benny and has ${bennies} bennies.</p>
